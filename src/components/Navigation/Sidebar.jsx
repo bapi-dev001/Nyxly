@@ -18,6 +18,7 @@ import {
   LogOut 
 } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext.jsx";
+import CreativeNyxlyNIcon from "../../icons/svgicon/Nyxlyicon.jsx";
 
 // 1. Reusable Nav Item Component
 const SidebarItem = ({ icon: Icon, label, to, active }) => {
@@ -55,12 +56,13 @@ export default function Sidebar() {
       <div className="fixed left-0 top-0 h-screen border-r border-(--color-border) bg-(--color-background) text-(--color-foreground) p-3 flex flex-col w-18 xl:w-60 transition-colors duration-300 z-50">
         
         <Link to="/" className="mb-8 px-3 pt-6 block">
-          <img 
+          {/* <img 
             src="https://www.logo.wine/a/logo/Instagram/Instagram-Wordmark-Logo.wine.svg" 
             className={`w-28 hidden xl:block ${isDark ? "invert" : ""}`} 
             alt="Instagram" 
           />
-          <Instagram className="w-7 h-7 xl:hidden" />
+          <Instagram className="w-7 h-7 xl:hidden" /> */}
+          <CreativeNyxlyNIcon />
         </Link>
 
         <nav className="flex-1 overflow-y-auto scrollbar-hide space-y-1">

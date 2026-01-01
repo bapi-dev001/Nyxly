@@ -9,18 +9,29 @@ export default function Stories() {
   ];
 
   return (
-    <div className="flex space-x-4 p-4 rounded-lg overflow-x-auto scrollbar-hide">
-      {users.map((user) => (
-        <div key={user.id} className="flex flex-col items-center cursor-pointer group">
-          {/* Gradient Border Circle */}
-          <div className="w-16 h-16 rounded-full bg-linear-to-tr from-yellow-400 to-fuchsia-600 p-0.5">
-            <div className="bg-white p-0.5 rounded-full">
-              <img src={user.img} className="rounded-full w-full h-full object-cover" alt={user.name} />
+    <>
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
+      <div className="flex space-x-4 p-4 rounded-lg overflow-x-auto hide-scrollbar">
+        {users.map((user) => (
+          <div key={user.id} className="flex flex-col items-center cursor-pointer group">
+            {/* Gradient Border Circle */}
+            <div className="w-16 h-16 rounded-full bg-linear-to-tr from-yellow-400 to-fuchsia-600 p-0.5">
+              <div className="bg-white p-0.5 rounded-full">
+                <img src={user.img} className="rounded-full w-full h-full object-cover" alt={user.name} />
+              </div>
             </div>
+            <p className="text-xs w-16 truncate text-center mt-1">{user.name}</p>
           </div>
-          <p className="text-xs w-16 truncate text-center mt-1">{user.name}</p>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
