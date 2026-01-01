@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-background: #ffffff;
+    --color-foreground: #0f172a;
+    --color-brand-primary: #3b82f6;
+    --color-chat-received: #f1f5f9;
+    --color-border: #e2e8f0;
+  }
+  .dark {
+    --color-background: #0f172a;
+    --color-foreground: #f8fafc;
+    --color-chat-received: #1e293b;
+    --color-border: #334155;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    transition: background-color 0.3s ease;
+  }
+}
