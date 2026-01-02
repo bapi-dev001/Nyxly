@@ -8,7 +8,7 @@ import {
   Smile, 
   Image as ImageIcon, 
   Heart,
-  ArrowLeft // <--- 1. Import ArrowLeft
+  ArrowLeft 
 } from "lucide-react";
 
 export default function Messages() {
@@ -21,16 +21,12 @@ export default function Messages() {
   ];
 
   return (
-    // 2. SCROLL FIX: Adjusted height calculation for Mobile vs Desktop
-    // Mobile: h-[calc(100vh-8rem)] accounts for the bottom nav bar so it doesn't overlap
-    // Desktop: h-[calc(100vh-2rem)] uses the full space
-    <div className="flex h-[calc(100vh-5.5rem)] md:h-[calc(100vh-2rem)] max-w-233.75 mx-auto mt-4 border border-(--color-border) bg-(--color-background) rounded-lg overflow-hidden shadow-sm text-(--color-foreground)">
+    <div className="flex h-[calc(100vh-8rem)] md:h-[calc(100vh-2rem)] max-w-233.75 mx-auto mt-4 border border-(--color-border) bg-(--color-background) rounded-lg overflow-hidden shadow-sm text-(--color-foreground)">
       
       {/* --- LEFT SIDE: INBOX --- */}
-      {/* Logic: Hidden on mobile if a chat is active */}
-      <div className={`w-full md:w-87.5 border-r border-(--color-border) flex flex-col ${activeChat ? "hidden md:flex" : "flex"}`}>
+      <div className={`w-full md:87.5 border-r border-(--color-border) flex flex-col ${activeChat ? "hidden md:flex" : "flex"}`}>
         
-        {/* Inbox Header */}
+        {/* Header */}
         <div className="h-15 flex justify-between items-center px-5 border-b border-(--color-border)">
           <div className="flex items-center gap-1 font-bold text-lg cursor-pointer">
             username_here <ChevronDown size={16} />
@@ -38,11 +34,13 @@ export default function Messages() {
           <SquarePen size={24} className="cursor-pointer hover:opacity-50" />
         </div>
 
+        {/* Tabs */}
         <div className="flex justify-between px-4 pt-4 pb-2 font-semibold text-sm border-b border-(--color-border)">
           <span className="border-b-2 border-(--color-foreground) pb-2 cursor-pointer w-1/2 text-center">Primary</span>
           <span className="text-gray-400 pb-2 cursor-pointer w-1/2 text-center hover:text-(--color-foreground)">General</span>
         </div>
 
+        {/* List */}
         <div className="overflow-y-auto flex-1">
           {chats.map((chat) => (
             <div 
@@ -63,19 +61,18 @@ export default function Messages() {
       </div>
 
       {/* --- RIGHT SIDE: CHAT WINDOW --- */}
-      <div className={`flex-1 flex flex-col ${!activeChat ? "hidden md:flex" : "flex"}`}>
+      {/* FIX: 'fixed inset-0 z-[60]' makes it full screen on mobile, covering the bottom nav */}
+      <div className={`flex-col ${!activeChat ? "hidden md:flex" : "flex fixed inset-0 z-60 bg-(--color-background) md:static md:flex-1"}`}>
         
         {activeChat ? (
           <>
             {/* Chat Header */}
             <div className="h-15 flex justify-between items-center px-4 md:px-6 border-b border-(--color-border)">
               <div className="flex items-center gap-3">
-                {/* 3. BACK BUTTON: Only visible on mobile (md:hidden) */}
                 <ArrowLeft 
                   onClick={() => setActiveChat(null)} 
                   className="md:hidden cursor-pointer mr-2" 
                 />
-                
                 <img src={activeChat.img} className="w-8 h-8 rounded-full" />
                 <span className="font-bold">{activeChat.user}</span>
               </div>
@@ -86,7 +83,7 @@ export default function Messages() {
               </div>
             </div>
 
-            {/* Messages Area - flex-1 allows it to scroll while Header/Input stay fixed */}
+            {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-2">
               <div className="flex gap-2 mb-4">
                 <img src={activeChat.img} className="w-7 h-7 rounded-full mt-auto" />
@@ -103,7 +100,8 @@ export default function Messages() {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 bg-(--color-background)">
+            {/* pb-4 added for mobile safe area */}
+            <div className="p-4 bg-(--color-background) pb-8 md:pb-4">
               <div className="border border-(--color-border) rounded-full flex items-center p-2 px-4 gap-3">
                 <Smile size={24} className="cursor-pointer text-gray-500" />
                 <input 
@@ -111,7 +109,6 @@ export default function Messages() {
                   placeholder="Message..." 
                   className="flex-1 bg-transparent outline-none text-sm placeholder:text-gray-500"
                 />
-                {/* Hidden on small mobile screens to save space if needed */}
                 <ImageIcon size={24} className="cursor-pointer text-gray-500 hidden sm:block" />
                 <Heart size={24} className="cursor-pointer text-gray-500" />
               </div>

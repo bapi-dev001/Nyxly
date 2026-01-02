@@ -2,8 +2,8 @@ import { Heart, MessageCircle, Send, Bookmark, MoreHorizontal } from "lucide-rea
 
 export default function Post({ username, userImage, postImage, caption, likes }) {
   return (
-    <div className="bg-(--color-background) text-(---color-foreground) border border-(--color-border) rounded-lg mb-4">
-      {/* Header */}
+    <div className="w-full bg-(--color-background) text-(---color-foreground) border border-(--color-border) rounded-lg mb-4">
+      
       <div className="flex items-center justify-between p-3">
         <div className="flex items-center gap-3">
           <img src={userImage} className="w-8 h-8 rounded-full object-cover" alt={username} />
@@ -12,12 +12,12 @@ export default function Post({ username, userImage, postImage, caption, likes })
         <MoreHorizontal className="cursor-pointer" size={20} />
       </div>
 
-      {/* Image */}
+      
       <div className="aspect-square bg-(--color-background) text-(--color-foreground">
         <img src={postImage} className="w-full h-full object-cover" alt="post content" />
       </div>
 
-      {/* Actions */}
+      
       <div className="p-3">
         <div className="flex justify-between items-center mb-2">
           <div className="flex gap-4">
@@ -28,7 +28,7 @@ export default function Post({ username, userImage, postImage, caption, likes })
           <Bookmark className="hover:text-gray-500 cursor-pointer" size={24} />
         </div>
         
-        {/* Likes and Caption */}
+        
         <p className="font-bold text-sm mb-1">{likes} likes</p>
         <p className="text-sm">
           <span className="font-bold mr-2">{username}</span>
@@ -37,7 +37,7 @@ export default function Post({ username, userImage, postImage, caption, likes })
         <p className="text-gray-400 text-xs mt-2 uppercase">2 hours ago</p>
       </div>
 
-      {/* Comment Input */}
+
       <div className="p-3 border-t border-(--color-border) flex items-center justify-between">
         <input 
           type="text" 

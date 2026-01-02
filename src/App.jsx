@@ -22,7 +22,7 @@ function App() {
           </div>
         )}
 
-        <main className={`flex-1 ${!isAuthPage ? "md:ml-18 xl:ml-60" : ""} pb-16 md:pb-0`}>
+        <main className={`flex-1 overflow-hidden ${!isAuthPage ? "md:ml-18 xl:ml-60" : ""} pb-16 md:pb-0`}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={ <Search /> } />
