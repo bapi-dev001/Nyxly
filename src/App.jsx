@@ -7,6 +7,10 @@ import Auth from "./pages/Auth";
 import Messages from "./pages/Messages";
 import Search from "./pages/Search";
 import Settings from "./pages/Setting";
+import CreatePost from "./pages/CreatePost";
+import Notifications from "./pages/Notifications";
+import Explore from "./pages/Explore";
+import Reels from "./pages/Reels";
 
 function App() {
 
@@ -26,7 +30,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={ <Search /> } />
+            <Route path="/explore" element={ <Explore /> } />
+            <Route path="/reels" element={ <Reels /> } />
             <Route path="/messages" element={ <Messages /> } />
+            <Route path="/notifications" element={ <Notifications /> } />
+            <Route path="/create" element={ <CreatePost /> } />
             <Route path="/profile" element={<Profile />} />
             <Route path="/account/edit" element={ <Settings /> } />
             <Route path="/auth" element={<Auth />} />
