@@ -1,9 +1,11 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext"
+//  Navigation
 import Sidebar from "./components/Navigation/Sidebar";
 import MobileNav from "./components/Navigation/MobileNav";
+//  Pages
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import Auth from "./pages/Auth";
 import Messages from "./pages/Messages";
 import Search from "./pages/Search";
 import Settings from "./pages/Setting";
@@ -11,11 +13,24 @@ import CreatePost from "./pages/CreatePost";
 import Notifications from "./pages/Notifications";
 import Explore from "./pages/Explore";
 import Reels from "./pages/Reels";
+//  Auth
+import Login from "./pages/Auth/Signin";
+import Signup from "./pages/Auth/Signup";
+
+
+const ProtectedRoute = ({ children }) => {
+  const { user } = useAuth()
+  if(!user) {
+    return <Navigate to="/auth/login" replace />
+  }
+  return children;
+}
 
 function App() {
 
   const location = useLocation();
-  const isAuthPage = location.pathname === "/auth";
+  // const isAuthPage = location.pathname === "/auth";
+  const isAuthPage = location.pathname.startsWith("/auth");
 
   return (
     <div className="min-h-screen bg-(--color-background) text-(--color-foreground) transition-colors duration-300">
@@ -28,18 +43,20 @@ function App() {
 
         <main className={`flex-1 overflow-hidden ${!isAuthPage ? "md:ml-18 xl:ml-60" : ""} pb-16 md:pb-0`}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={ <Search /> } />
-            <Route path="/explore" element={ <Explore /> } />
-            <Route path="/reels" element={ <Reels /> } />
-            <Route path="/messages" element={ <Messages /> } />
-            <Route path="/notifications" element={ <Notifications /> } />
-            <Route path="/create" element={ <CreatePost /> } />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/account/edit" element={ <Settings /> } />
-            <Route path="/auth" element={<Auth />} />
+            <Route path="/" element={<ProtectedRoute> <Home/> </ProtectedRoute>} />
+            <Route path="/search" element={ <ProtectedRoute> <Search/> </ProtectedRoute> } />
+            <Route path="/explore" element={ <ProtectedRoute> <Explore/> </ProtectedRoute> } />
+            <Route path="/reels" element={ <ProtectedRoute> <Reels/> </ProtectedRoute> } />
+            <Route path="/messages" element={ <ProtectedRoute> <Messages/> </ProtectedRoute> } />
+            <Route path="/notifications" element={ <ProtectedRoute> <Notifications/> </ProtectedRoute> } />
+            <Route path="/create" element={ <ProtectedRoute> <CreatePost/> </ProtectedRoute> } />
+            <Route path="/profile" element={ <ProtectedRoute> <Profile/> </ProtectedRoute> } />
+            <Route path="/account/edit" element={ <ProtectedRoute> <Settings/> </ProtectedRoute> } />
+
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/signup" element={<Signup />} />
             
-            <Route path="*" element={<Navigate to="/" />} />
+            {/* <Route path="*" element={<Navigate to="/" />} /> */}
           </Routes>
         </main>
 

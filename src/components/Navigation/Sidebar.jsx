@@ -19,9 +19,13 @@ import {
 } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext.jsx";
 import CreativeNyxlyNIcon from "../../icons/svgicon/Nyxlyicon.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 // 1. Reusable Nav Item Component
 const SidebarItem = ({ icon: Icon, label, to, active }) => {
+
+  
+
   return (
     <Link 
       to={to} 
@@ -51,17 +55,14 @@ export default function Sidebar() {
   const currentPath = location.pathname;
   const { isDark, toggleTheme } = useTheme();
 
+  const { user, logout } = useAuth();
+  const defaultAvatar = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
+
   return (
     <>
       <div className="fixed left-0 top-0 h-screen border-r border-(--color-border) bg-(--color-background) text-(--color-foreground) p-3 flex flex-col w-18 xl:w-60 transition-colors duration-300 z-50">
         
         <Link to="/" className="mb-8 px-3 pt-6 block">
-          {/* <img 
-            src="https://www.logo.wine/a/logo/Instagram/Instagram-Wordmark-Logo.wine.svg" 
-            className={`w-28 hidden xl:block ${isDark ? "invert" : ""}`} 
-            alt="Instagram" 
-          />
-          <Instagram className="w-7 h-7 xl:hidden" /> */}
           <CreativeNyxlyNIcon />
         </Link>
 
@@ -77,7 +78,7 @@ export default function Sidebar() {
           <Link to="/profile" className="flex items-center p-3 my-1 cursor-pointer hover:bg-(--color-chat-received) rounded-xl transition-all group">
             <div className={`w-6 h-6 rounded-full overflow-hidden border ${currentPath === "/profile" ? "border-ar(--color-foreground) border-2" : "border-(--color-border)"}`}>
               <img 
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" 
+                src={user?.avatar || defaultAvatar}
                 alt="Profile" 
                 className="w-full h-full object-cover"
               />

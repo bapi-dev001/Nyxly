@@ -69,13 +69,18 @@ function ReelItem({ data, isMuted, toggleMute }) {
   };
 
   useEffect(() => {
-    if (videoRef.current) videoRef.current.play().catch(() => {});
+    if (videoRef.current) {
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => setIsPlaying(false));
+        }
+    }
   }, []);
 
   return (
-    <div className="relative h-screen w-full md:w-100 mx-auto snap-start flex items-center justify-center bg-black border-x border-gray-800">
+    <div className="relative h-screen w-full md:w-100 mx-auto snap-start flex items-center justify-center bg-black">
       
-      <div className="relative w-full h-full md:h-[95%] md:rounded-lg overflow-hidden cursor-pointer" onClick={togglePlay}>
+      <div className="relative w-full h-full md:h-[95%] md:rounded-xl overflow-hidden cursor-pointer shadow-lg border-x border-gray-800" onClick={togglePlay}>
         <video
           ref={videoRef}
           src={data.url}
@@ -85,44 +90,50 @@ function ReelItem({ data, isMuted, toggleMute }) {
           playsInline
         />
         
-        <button onClick={(e) => { e.stopPropagation(); toggleMute(); }} className="absolute top-4 right-4 bg-black/50 p-2 rounded-full backdrop-blur-sm z-20">
+        {/* Mute Button */}
+        <button onClick={(e) => { e.stopPropagation(); toggleMute(); }} className="absolute top-4 right-4 bg-black/50 p-2 rounded-full backdrop-blur-sm z-30 hover:bg-black/70 transition">
            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
         </button>
         
-        <div className="absolute bottom-0 left-0 w-full p-4 bg-linear-to-t from-black/80 to-transparent pt-20 z-10">
+        <div className="absolute left-0 w-full p-4 bg-linear-to-t from-black/80 via-black/40 to-transparent pt-20 z-10 bottom-15 md:bottom-0 transition-all">
           <div className="flex items-center gap-3 mb-3">
-             <img src={data.avatar} className="w-8 h-8 rounded-full border border-white" />
-             <span className="font-semibold text-sm hover:underline cursor-pointer">{data.user}</span>
-             <button className="border border-white/50 text-white text-xs px-2 py-1 rounded-md font-semibold backdrop-blur-sm">Follow</button>
+             <img src={data.avatar} className="w-9 h-9 rounded-full border border-white/50" />
+             <span className="font-semibold text-sm hover:underline cursor-pointer text-white drop-shadow-md">{data.user}</span>
+             <button className="border border-white/60 text-white text-xs px-2.5 py-1 rounded-md font-semibold backdrop-blur-md hover:bg-white/20 transition">Follow</button>
           </div>
-          <p className="text-sm mb-3 line-clamp-2">{data.caption}</p>
-          <div className="flex items-center gap-2 text-xs opacity-90 overflow-hidden">
-             <Music2 size={12} />
-             <div className="whitespace-nowrap animate-marquee">{data.audio} • Original Audio</div>
+          <p className="text-sm mb-3 line-clamp-2 drop-shadow-sm">{data.caption}</p>
+          <div className="flex items-center gap-2 text-xs opacity-90">
+             <Music2 size={13} />
+             <div className="whitespace-nowrap">{data.audio}</div>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-4 right-2 md:-right-16 flex flex-col items-center gap-6 z-20 md:pb-10">
+      <div className="absolute right-2 md:-right-20 flex flex-col items-center gap-6 z-20 bottom-20 md:bottom-4 transition-all">
         
-        {/* Like */}
         <div className="flex flex-col items-center gap-1">
-          <button onClick={() => setLiked(!liked)} className="transition-transform active:scale-75">
-            <Heart size={28} className={liked ? "fill-red-500 text-red-500" : "text-white"} />
+          <button onClick={() => setLiked(!liked)} className="transition-transform active:scale-75 hover:scale-110">
+            <Heart size={28} className={`drop-shadow-lg ${liked ? "fill-red-500 text-red-500" : "text-white"}`} />
           </button>
-          <span className="text-xs font-medium">{data.likes}</span>
+          <span className="text-xs font-medium drop-shadow-md">{data.likes}</span>
         </div>
 
         <div className="flex flex-col items-center gap-1">
-           <MessageCircle size={28} />
-           <span className="text-xs font-medium">{data.comments}</span>
-        </div>
-        <div className="flex flex-col items-center gap-1">
-           <Send size={28} className="-rotate-45 mb-1" />
+           <button className="hover:opacity-80 transition active:scale-90">
+             <MessageCircle size={28} className="text-white drop-shadow-lg" />
+           </button>
+           <span className="text-xs font-medium drop-shadow-md">{data.comments}</span>
         </div>
 
-        <MoreHorizontal size={28} />
-        <div className="w-8 h-8 rounded-md border-2 border-white overflow-hidden mt-2">
+        <button className="hover:opacity-80 transition active:scale-90">
+           <Send size={28} className="-rotate-45 mb-1 text-white drop-shadow-lg" />
+        </button>
+
+        <button className="hover:opacity-80 transition">
+           <MoreHorizontal size={28} className="text-white drop-shadow-lg" />
+        </button>
+
+        <div className="w-8 h-8 rounded-md border-2 border-white overflow-hidden mt-2 animate-[spin_4s_linear_infinite]">
            <img src={data.avatar} className="w-full h-full object-cover" />
         </div>
       </div>

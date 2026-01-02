@@ -9,10 +9,10 @@
     --color-border: #e2e8f0;
   }
   .dark {
-    --color-background: #0f172a;
+    --color-background: #080d18;
     --color-foreground: #f8fafc;
     --color-chat-received: #1e293b;
-    --color-border: #334155;
+    --color-border: #2f3c4f;
   }
 
   body {

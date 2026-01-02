@@ -6,9 +6,14 @@ import {
   Film,
 } from "lucide-react";
 
+import {useAuth} from "../../context/AuthContext"
+
 export default function MobileNav() {
   const location = useLocation();
   const currentPath = location.pathname;
+
+  const { user, logout } = useAuth();
+    const defaultAvatar = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
   const isActive = (path) => currentPath === path;
 
@@ -42,7 +47,7 @@ export default function MobileNav() {
       <Link to="/profile" className="p-2">
         <div className={`rounded-full p-px ${isActive("/profile") ? "border-2 border-(--color-foreground)" : "border border-transparent"}`}>
           <img 
-            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" 
+            src={user?.avatar || defaultAvatar}
             alt="Profile" 
             className="w-6 h-6 rounded-full object-cover"
           />

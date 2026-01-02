@@ -10,12 +10,10 @@ export default function Search() {
     { id: 4, username: "web_wizard", name: "Web Dev Tips", img: "https://i.pravatar.cc/150?u=8" },
   ]);
 
-  // Handle removing a single recent item
   const removeRecent = (id) => {
     setRecentSearches(recentSearches.filter((item) => item.id !== id));
   };
 
-  // Clear the input field
   const clearQuery = () => setQuery("");
 
   return (
@@ -39,7 +37,6 @@ export default function Search() {
             className="block w-full pl-10 pr-10 py-3 bg-(--color-chat-received) border-none rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-gray-300 placeholder:text-gray-500"
           />
 
-          {/* Clear Input Button (X) */}
           {query && (
             <button 
               onClick={clearQuery}
@@ -53,7 +50,6 @@ export default function Search() {
 
       <div className="border-t border-(--color-border)"></div>
 
-      {/* 2. Recent Searches Section */}
       <div className="px-4 py-4">
         <div className="flex justify-between items-center mb-4 px-2">
           <h2 className="font-semibold text-base">Recent</h2>
@@ -67,7 +63,6 @@ export default function Search() {
           )}
         </div>
 
-        {/* List of Users */}
         <div className="flex flex-col">
           {recentSearches.length === 0 ? (
             <p className="text-gray-500 text-center mt-10 text-sm">No recent searches.</p>
@@ -86,11 +81,10 @@ export default function Search() {
                     <span className="text-gray-500 text-sm">{user.name}</span>
                   </div>
                 </div>
-                
-                {/* Delete Button (X) */}
+
                 <button 
                   onClick={(e) => {
-                    e.stopPropagation(); // Stop click from triggering user selection
+                    e.stopPropagation();
                     removeRecent(user.id);
                   }}
                   className="text-gray-400 hover:text-(--color-foreground) p-2"
