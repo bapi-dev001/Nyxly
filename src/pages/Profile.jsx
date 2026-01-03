@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useAuth } from "../context/AuthContext"; // Get logged in user info
+import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import { Settings, Grid, Bookmark, Users, Heart, Camera, } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ export default function Profile() {
     const fetchPosts = async () => {
       if (!user) return;
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/posts/user/${user._id}`);
+        const { data } = await axios.get(`https://nyxlyapi.onrender.com/api/posts/user/${user._id}`);
         setPosts(data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -45,7 +45,7 @@ export default function Profile() {
         },
       };
 
-      const { data } = await axios.post('http://localhost:5000/api/users/profile/photo', formData, config);
+      const { data } = await axios.post('https://nyxlyapi.onrender.com/api/users/profile/photo', formData, config);
 
       const updatedUser = { ...data, token }; 
       localStorage.setItem("userInfo", JSON.stringify(updatedUser));

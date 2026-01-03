@@ -7,16 +7,16 @@ import {
   Image as ImageIcon, Heart, ArrowLeft, Search, Mic, Plus, Loader2
 } from "lucide-react";
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://nyxly-api.onrender.com";
 var socket;
 
 export default function Messages() {
   const { user } = useAuth();
   
   // --- STATES ---
-  const [activeChat, setActiveChat] = useState(null); // The user you are talking to
-  const [chatList, setChatList] = useState([]); // List of users from DB
-  const [searchQuery, setSearchQuery] = useState(""); // Search input
+  const [activeChat, setActiveChat] = useState(null);
+  const [chatList, setChatList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [loadingChats, setLoadingChats] = useState(false);
   
   const [messageText, setMessageText] = useState(""); 
@@ -32,7 +32,6 @@ export default function Messages() {
     return () => socket.disconnect();
   }, [user]);
 
-  // --- 2. FETCH USERS (SIDEBAR) ---
   useEffect(() => {
     const fetchUsers = async () => {
       setLoadingChats(true);
@@ -41,7 +40,7 @@ export default function Messages() {
         const config = { headers: { Authorization: `Bearer ${token}` } };
         
         // Fetch users based on search query
-        const { data } = await axios.get(`http://localhost:5000/api/users?search=${searchQuery}`, config);
+        const { data } = await axios.get(`${ENDPOINT}api/users?search=${searchQuery}`, config);
         setChatList(data);
       } catch (error) {
         console.error("Error fetching users", error);
