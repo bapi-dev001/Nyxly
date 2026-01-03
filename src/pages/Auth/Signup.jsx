@@ -38,7 +38,7 @@ export default function Signup() {
     setTimeout(() => {
       setIsLoading(false);
       setStep(2);
-    }, 1500);
+    }, 900);
   };
 
   const handleOtpSubmit = (e) => {
@@ -47,7 +47,7 @@ export default function Signup() {
     setTimeout(() => {
       setIsLoading(false);
       setStep(3);
-    }, 1500);
+    }, 900);
   };
 
   const handleFinalSubmit = async (e) => {
